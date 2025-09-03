@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ตะกร้าสินค้า - พรีเมียร์ลีกพรีเมียม</title>
+<style>
+  body {
+    margin:0;
+    font-family:'Sarabun',sans-serif;
+    background:#111;
+    color:white;
+  }
+
+  header {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 30px;
+    background: linear-gradient(to right,#000,#ffeb3b);
+    color:#ffeb3b;
+  }
+
+  header h1 { margin:0; font-size:1.5em; cursor:pointer; }
+
+  header div a {
+    color:#111;
+    background:#ffeb3b;
+    padding:8px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    margin-left:10px;
+  }
+
+  .cart-section {
+    padding:30px;
+    max-width:900px;
+    margin:auto;
+  }
+
+  .cart-section h2 {
+    margin-bottom:15px;
+    color:#ffeb3b;
+  }
+
+  .cart-item {
+    display:flex;
+    align-items:center;
+    background:#222;
+    border:2px solid #ffeb3b;
+    border-radius:10px;
+    padding:15px;
+    margin-bottom:15px;
+    gap:15px;
+  }
+
+  .cart-item img {
+    width:100px;
+    height:100px;
+    object-fit:cover;
+    border-radius:8px;
+  }
+
+  .cart-item div {
+    flex:1;
+  }
+
+  .cart-item h3 { margin:0; color:#ffeb3b; }
+  .cart-item p { margin:5px 0; }
+
+  .cart-item input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-right:15px;
+    cursor:pointer;
+  }
+
+  .btn-back, .btn-delete {
+    background:#333;
+    color:white;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:1em;
+  }
+  .btn-back:hover, .btn-delete:hover {
+    background:#555;
+    transform:scale(1.05);
+    transition:0.3s;
+  }
+
+  .btn-checkout {
+    background:#ffeb3b;
+    color:#111;
+    padding:8px 18px;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    font-size:1em;
+  }
+
+  .btn-checkout:hover {
+    background:#fdd835;
+    transform:scale(1.05);
+    transition:0.3s;
+  }
+
+  .total {
+    font-size:1.2em;
+    font-weight:bold;
+  }
+
+  .btn-delete {
+    margin-left:10px;
+    background:#ff5252;
+    color:white;
+  }
+  .btn-delete:hover {
+    background:#ff1744;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1 onclick="window.location.href='product.html'"> กลับไปยังสินค้า</h1>
+  <div>
+    <a href="login.html">Login</a>
+  </div>
+</header>
+
+<section class="cart-section">
+  <h2>ตะกร้าสินค้าของคุณ</h2>
+
+  <div id="cartItems">
+    <!-- รายการสินค้าแสดงตรงนี้ด้วย JS -->
+  </div>
+
+  <!-- Footer ของตะกร้า: ปุ่มย้อนกลับ + รวมราคา + ปุ่มสั่งซื้อ -->
+  <div class="cart-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+    <button class="btn-back" onclick="window.location.href='product.html'">🔙 กลับไปสินค้า</button>
+    <div style="text-align:right;">
+      <span class="total">รวมราคาที่เลือก: <span id="totalPrice">0</span> บาท</span>
+      <button class="btn-checkout" onclick="checkout()">สั่งซื้อ</button>
+    </div>
+  </div>
+</section>
+
+<script>
+// โหลดตะกร้าจาก localStorage
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function renderCart() {
+  const container = document.getElementById("cartItems");
+  container.innerHTML = "";
+  cart.forEach((item, index) => {
+    const div = document.createElement("div");
+    div.className = "cart-item";
+    div.innerHTML = `
+      <input type="checkbox" class="selectItem" data-index="${index}" checked>
+      <img src="${item.img}" alt="${item.name}">
+      <div>
+        <h3>${item.name}</h3>
+        <p>ขนาด: ${item.size}</p>
+        <p>ราคา: ${item.price} บาท</p>
+        <p>จำนวน: ${item.qty}</p>
+      </div>
+      <button class="btn-delete" onclick="deleteItem(${index})">ลบ</button>
+    `;
+    container.appendChild(div);
+  });
+  updateTotal();
+}
+
+// อัปเดตราคาสินค้าที่ติ๊กถูก
+function updateTotal(){
+  const checkboxes = document.querySelectorAll(".selectItem");
+  let total = 0;
+  checkboxes.forEach(cb => {
+    if(cb.checked){
+      const item = cart[cb.dataset.index];
+      total += item.price * item.qty;
+    }
+  });
+  document.getElementById("totalPrice").textContent = total;
+}
+
+// ติ๊กเปลี่ยนให้ update
+document.addEventListener("change", e => {
+  if(e.target.classList.contains("selectItem")){
+    updateTotal();
+  }
+});
+
+// ฟังก์ชันสั่งซื้อ
+function checkout(){
+  const selected = cart.filter((_,i) => document.querySelector(`.selectItem[data-index='${i}']`).checked);
+  if(selected.length === 0){
+    alert("กรุณาเลือกสินค้าที่ต้องการสั่งซื้อ");
+    return;
+  }
+  alert("สั่งซื้อเรียบร้อย! จำนวนสินค้า: " + selected.length);
+  // สามารถต่อยอดส่งไปหน้า order/ชำระเงิน
+}
+
+// ฟังก์ชันลบสินค้า
+function deleteItem(index){
+  if(confirm("คุณแน่ใจหรือไม่ว่าต้องการลบสินค้านี้ออกจากตะกร้า?")){
+    cart.splice(index, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+}
+
+renderCart();
+</script>
+
+</body>
+</html>

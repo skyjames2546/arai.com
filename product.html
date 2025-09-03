@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สินค้า - พรีเมียร์ลีกพรีเมียม</title>
+<style>
+  body {
+    margin:0;
+    font-family:'Sarabun',sans-serif;
+    background:#111;
+    color:white;
+  }
+
+  /* Header */
+  header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 30px;
+    background: linear-gradient(to right,#000,#ffeb3b);
+    position: relative;
+  }
+
+  header .left {
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    gap:20px;
+  }
+  header .left span {
+    font-weight:bold;
+    font-size:1.2em;
+    background: linear-gradient(45deg, #ffeb3b, #ff5722, #03a9f4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+  }
+  header .left span:hover {
+    text-shadow: 0 0 8px rgba(255,235,59,0.8), 0 0 12px rgba(255,87,34,0.6);
+    transform: scale(1.1);
+  }
+  header .left img {
+    width:50px;
+    transition: transform 0.3s ease;
+  }
+  header .left img:hover { transform: scale(1.05); }
+
+  header .center-logo {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: auto;
+    background: rgba(0,0,0,0.2);
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor:pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  header .center-logo:hover {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 235, 59, 0.7);
+  }
+
+  header .right {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    position:relative;
+  }
+  header .right a, header .right button {
+    background: linear-gradient(45deg,#ffeb3b,#ffc107);
+    color:#111;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    text-decoration:none;
+    box-shadow:0 3px 5px rgba(0,0,0,0.3);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+  }
+  header .right #cartCount {
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    background:#ffeb3b;
+    color:#000;
+    border-radius:50%;
+    padding:2px 6px;
+    font-size:0.8em;
+  }
+  #langDropdown {
+    display:none;
+    position:absolute;
+    top:40px;
+    right:0;
+    background:#111;
+    border:2px solid #ffeb3b;
+    border-radius:8px;
+    overflow:hidden;
+    z-index:100;
+  }
+  #langDropdown button {
+    display:block;
+    width:100%;
+    padding:8px 12px;
+    background:#000;
+    color:#ffeb3b;
+    border:none;
+    text-align:left;
+    cursor:pointer;
+  }
+  #langDropdown button:hover { background:#222; }
+
+  /* Product Section */
+  .product-section {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    padding:30px;
+    gap:20px;
+  }
+  .product-card {
+    background:#222;
+    border:2px solid #ffeb3b;
+    border-radius:10px;
+    width:260px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 2px 5px rgba(255,255,0,0.2);
+    transition: transform 0.3s;
+  }
+  .product-card:hover { transform:scale(1.03); }
+
+  .slider {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 3px solid #ffeb3b;
+    box-shadow: 0 4px 12px rgba(255, 235, 59, 0.4);
+    margin-bottom: 10px;
+  }
+  .slider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 1s ease-in-out;
+    border-radius: 12px;
+  }
+  .slider img.active { opacity: 1; z-index: 1; }
+
+  .product-card h2 { color:#ffeb3b; margin:10px 0; }
+  .price { font-size:1.1em; color:#fff176; font-weight:bold; margin:8px 0; }
+
+  .product-card button {
+    background:#ffeb3b;
+    color:#111;
+    border:none;
+    padding:7px 12px;
+    border-radius:5px;
+    cursor:pointer;
+    margin:5px;
+    font-weight:bold;
+  }
+  .product-card button:hover { background:#fdd835; }
+
+  footer { background:#000; color:#ffeb3b; text-align:center; padding:15px; margin-top:40px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="left">
+    <img src="https://i.pinimg.com/1200x/55/c9/95/55c995b00c243e655db571aa67efdfa3.jpg" alt="Home" onclick="window.location.href='index.html'">
+    <span id="homeText">Home</span>
+    <span id="productText">Product</span>
+    <span id="orderText" onclick="window.location.href='cart.html'">Order</span>
+  </div>
+  
+  <img class="center-logo" src="c:\Users\skyja\Downloads\unnamed.png" alt="Logo" onclick="window.location.href='index.html'">
+
+  <div class="right">
+    <button id="langBtn">🌐</button>
+    <div id="langDropdown">
+      <button onclick="setLanguage('th')">ไทย</button>
+      <button onclick="setLanguage('en')">English</button>
+    </div>
+    <a href="login.html">Login</a>
+    <div onclick="window.location.href='cart.html'">🛒
+      <span id="cartCount">0</span>
+    </div>
+  </div>
+</header>
+
+<section class="product-section">
+  <!-- Manchester United -->
+  <div class="product-card" data-name-th="แมนเชสเตอร์ ยูไนเต็ด" data-name-en="Manchester United">
+    <div class="slider">
+      <img src="https://i.pinimg.com/1200x/df/9f/17/df9f178bd246ea64ce7290ccb4cf301d.jpg" class="active" alt="">
+      <img src="https://i.pinimg.com/736x/c1/bd/25/c1bd2521bc956338a72eb1e3b08bc4fd.jpg" alt="">
+      <img src="https://i.pinimg.com/1200x/9f/7d/58/9f7d5814d125ce22bfa67f9ee7ad9601.jpg" alt="">
+    </div>
+    <h2 class="product-name">Manchester United</h2>
+    <p class="price" data-price="2500">฿2500</p>
+    <button class="buy-btn">Buy</button>
+    <button class="details-btn">Details</button>
+  </div>
+
+  <!-- Liverpool -->
+  <div class="product-card" data-name-th="ลิเวอร์พูล" data-name-en="Liverpool">
+    <div class="slider">
+      <img src="https://i.pinimg.com/1200x/1a/89/9d/1a899d2f1f68fef25a4aef262383eae3.jpg" class="active" alt="">
+      <img src="https://i.pinimg.com/736x/37/70/a4/3770a4c0f671418e8179f273a326d055.jpg" alt="">
+      <img src="https://i.pinimg.com/736x/87/62/60/87626063a0178ecd02f636121fa8579f.jpg" alt="">
+    </div>
+    <h2 class="product-name">Liverpool</h2>
+    <p class="price" data-price="2600">฿2600</p>
+    <button class="buy-btn">Buy</button>
+    <button class="details-btn">Details</button>
+  </div>
+
+  <!-- Chelsea -->
+  <div class="product-card" data-name-th="เชลซี" data-name-en="Chelsea">
+    <div class="slider">
+      <img src="https://i.pinimg.com/1200x/de/f9/02/def9028257ff49c66a071e538d2ccf89.jpg" class="active" alt="">
+      <img src="https://i.pinimg.com/736x/41/76/3d/41763dd2ede5f41d8055ce56be7ce99c.jpg" alt="">
+      <img src="https://i.pinimg.com/736x/09/ae/70/09ae706c622638e904cb17c99bcd87de.jpg" alt="">
+    </div>
+    <h2 class="product-name">Chelsea</h2>
+    <p class="price" data-price="2550">฿2550</p>
+    <button class="buy-btn">Buy</button>
+    <button class="details-btn">Details</button>
+  </div>
+
+  <!-- Arsenal -->
+  <div class="product-card" data-name-th="อาร์เซน่อล" data-name-en="Arsenal">
+    <div class="slider">
+      <img src="https://i.pinimg.com/1200x/e3/a2/04/e3a204804ef42c9849da348a5b99993c.jpg" class="active" alt="">
+      <img src="https://i.pinimg.com/1200x/65/2d/3c/652d3c20da1c48ea613ea55b749cde94.jpg" alt="">
+      <img src="https://i.pinimg.com/736x/95/87/db/9587db234840f5f527dc4fe87697fba6.jpg" alt="">
+    </div>
+    <h2 class="product-name">Arsenal</h2>
+    <p class="price" data-price="2480">฿2480</p>
+    <button class="buy-btn">Buy</button>
+    <button class="details-btn">Details</button>
+  </div>
+
+  <!-- Manchester City -->
+  <div class="product-card" data-name-th="แมนเชสเตอร์ ซิตี้" data-name-en="Manchester City">
+    <div class="slider">
+      <img src="https://i.pinimg.com/1200x/b6/6c/25/b66c254176ffdf45f7628fb512e1e491.jpg" class="active" alt="">
+      <img src="https://i.pinimg.com/736x/97/df/e7/97dfe756ee9d102131f30a128837a9cd.jpg" alt="">
+      <img src="https://i.pinimg.com/736x/54/83/c0/5483c06da4d5ee15bc4ac6ef5774156b.jpg" alt="">
+    </div>
+    <h2 class="product-name">Manchester City</h2>
+    <p class="price" data-price="2700">฿2700</p>
+    <button class="buy-btn">Buy</button>
+    <button class="details-btn">Details</button>
+  </div>
+
+  <!-- Tottenham -->
+  <div class="product-card" data-name-th="สเปอร์ส" data-name-en="Tottenham">
+    <div class="slider">
+      <img src="https://i.pinimg.com/1200x/29/db/55/29db55c726f01145f27b0d0d901cf8e1.jpg" class="active" alt="">
+      <img src="https://i.pinimg.com/736x/ba/3b/74/ba3b7442a0200362371d3d87511430fc.jpg" alt="">
+      <img src="https://i.pinimg.com/1200x/44/40/b9/4440b9ef731ad23f8c070f797de5ce9e.jpg" alt="">
+    </div>
+    <h2 class="product-name">Tottenham</h2>
+    <p class="price" data-price="2650">฿2650</p>
+    <button class="buy-btn">Buy</button>
+    <button class="details-btn">Details</button>
+  </div>
+</section>
+
+<footer>© 2025 พรีเมียร์ลีกพรีเมียม</footer>
+
+<script>
+// สไลเดอร์รูปสินค้า
+document.querySelectorAll('.slider').forEach(slider => {
+  const imgs = slider.querySelectorAll('img');
+  let index = 0;
+  setInterval(() => {
+    imgs[index].classList.remove('active');
+    index = (index + 1) % imgs.length;
+    imgs[index].classList.add('active');
+  }, 4000);
+});
+
+// ปุ่ม Buy
+document.querySelectorAll('.buy-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const card = e.target.closest('.product-card');
+    const name = card.querySelector('.product-name').textContent;
+    const price = card.querySelector('.price').dataset.price;
+    const img = card.querySelector('img.active').src;
+    const product = {name, price, img, qty:1};
+    sessionStorage.setItem('currentProduct', JSON.stringify(product));
+    window.location.href='order.html';
+  });
+});
+
+// ปุ่ม Details
+document.querySelectorAll('.details-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    const card = e.target.closest('.product-card');
+    const teamName = card.dataset.nameEn;
+    let teamKey = '';
+    switch(teamName){
+      case 'Manchester United': teamKey='manu'; break;
+      case 'Liverpool': teamKey='liverpool'; break;
+      case 'Chelsea': teamKey='chelsea'; break;
+      case 'Arsenal': teamKey='arsenal'; break;
+      case 'Manchester City': teamKey='man_city'; break;
+      case 'Tottenham': teamKey='tottenham'; break;
+      default: teamKey='manu';
+    }
+    window.location.href = `detail.html?team=${teamKey}`;
+  });
+});
+
+// อัปเดตจำนวนสินค้าในรถเข็น
+function updateCartCount(){
+  const cart = JSON.parse(localStorage.getItem('cart')) || [];
+  document.getElementById('cartCount').textContent = cart.reduce((sum,item)=>sum+item.qty,0);
+}
+updateCartCount();
+
+// Language dropdown
+const langBtn = document.getElementById('langBtn');
+const langDropdown = document.getElementById('langDropdown');
+langBtn.addEventListener('click', ()=> { langDropdown.style.display = langDropdown.style.display==='block'?'none':'block'; });
+
+// Set language
+function setLanguage(lang){
+  document.getElementById('homeText').textContent = lang==='th' ? 'หน้าหลัก':'Home';
+  document.getElementById('productText').textContent = lang==='th' ? 'สินค้า':'Product';
+  document.getElementById('orderText').textContent = lang==='th' ? 'สั่งซื้อ':'Order';
+  document.querySelectorAll('.product-card').forEach(p=>{
+    p.querySelector('.product-name').textContent = lang==='th'? p.dataset.nameTh : p.dataset.nameEn;
+    p.querySelector('.buy-btn').textContent = lang==='th'? 'ซื้อ':'Buy';
+    p.querySelector('.details-btn').textContent = lang==='th'? 'รายละเอียด':'Details';
+  });
+  langDropdown.style.display='none';
+}
+</script>
+</body>
+</html>

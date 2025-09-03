@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>สมัครสมาชิก - พรีเมียร์ลีกพรีเมียม</title>
+<style>
+  html, body {
+    margin:0;
+    padding:0;
+    height:100%; 
+    font-family:'Sarabun',sans-serif;
+    background: linear-gradient(135deg, #000, #222);
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  }
+
+  .register-box {
+    background: #1a1a1a;
+    padding: 30px 40px;
+    border-radius: 15px;
+    width:350px;
+    text-align:center;
+    border:2px solid #ffeb3b;
+    box-shadow: 0 8px 20px rgba(255,235,59,0.5);
+  }
+
+  .register-box h2 {
+    margin-bottom: 20px;
+    color:#ffeb3b;
+    text-shadow: 0 2px 5px #000;
+  }
+
+  .register-box input {
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border-radius:10px;
+    border:1px solid #ffeb3b;
+    background:#222;
+    color:#fff;
+    font-size:1em;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+  }
+
+  .register-box input:focus {
+    outline:none;
+    border-color:#ffc107;
+    box-shadow: 0 0 8px #ffc107;
+  }
+
+  .register-box button {
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+    font-size:1em;
+    background: linear-gradient(45deg, #ffeb3b, #ffc107);
+    color:#111;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+  }
+
+  .register-box button:hover {
+    background: linear-gradient(45deg, #ffd54f, #fbc02d);
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+  }
+
+  .action-links {
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+  }
+
+  .action-links a {
+    color:#ffeb3b;
+    text-decoration:none;
+    font-weight:bold;
+    transition: all 0.3s ease;
+  }
+
+  .action-links a:hover {
+    color:#ffc107;
+  }
+
+  .error {
+    color:#ff5252;
+    font-size:0.9em;
+    margin-top:5px;
+    min-height:1em;
+  }
+
+  @media(max-width:400px){
+    .register-box { width:90%; padding:20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="register-box">
+  <h2>สมัครสมาชิก</h2>
+  <form id="registerForm">
+    <input type="text" id="username" placeholder="ชื่อผู้ใช้" required>
+    <input type="email" id="email" placeholder="อีเมล" required>
+    <input type="password" id="password" placeholder="รหัสผ่าน" required>
+    <input type="password" id="confirmPassword" placeholder="ยืนยันรหัสผ่าน" required>
+    <button type="submit">สมัครสมาชิก</button>
+    <div class="action-links">
+      <a href="login.html">กลับไปหน้า Login</a>
+    </div>
+    <p id="errorMsg" class="error"></p>
+  </form>
+</div>
+
+<script>
+document.getElementById("registerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const errorMsg = document.getElementById("errorMsg");
+
+  errorMsg.textContent = "";
+
+  if(password !== confirmPassword){
+    errorMsg.textContent = "รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน";
+    return;
+  }
+
+  if(password.length < 4){
+    errorMsg.textContent = "รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร";
+    return;
+  }
+
+  alert("สมัครสมาชิกสำเร็จ ✅\nชื่อผู้ใช้: " + username + "\nอีเมล: " + email);
+  window.location.href = "login.html"; 
+});
+</script>
+
+</body>
+</html>

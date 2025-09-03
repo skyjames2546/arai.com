@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>เสื้อบอลพรีเมียร์ลีกพรีเมียม</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Sarabun', sans-serif;
+      background-color: #000;
+      color: white;
+      background-image: url('https://images.unsplash.com/photo-1607082349250-62a6e09e2fae?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    header img.logo {
+      width: 80px;
+      display: block;
+      margin: 0 auto 10px;
+      cursor: pointer;
+      filter: drop-shadow(0 0 5px #ffeb3b);
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      cursor: pointer;
+      color: #ffeb3b;
+      text-shadow: 2px 2px 8px #000;
+    }
+
+    header h2 {
+      margin-top: 5px;
+      font-weight: normal;
+      font-size: 1.2em;
+      color: #fff;
+      text-shadow: 1px 1px 5px #000;
+    }
+
+    .cart-icon {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .cart-icon span {
+      background: #ffeb3b;
+      color: #000;
+      border-radius: 50%;
+      padding: 2px 7px;
+      font-size: 0.8em;
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+
+    /* Landing Page */
+    #landingPage {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      backdrop-filter: brightness(0.7);
+      text-align: center;
+      padding: 20px;
+    }
+
+    #landingPage h1 {
+      font-size: 3em;
+      color: #ffeb3b;
+      text-shadow: 3px 3px 6px #000;
+    }
+
+    #landingPage p {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #fff;
+      max-width: 600px;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    #landingPage button {
+      background: #ffeb3b;
+      color: #000;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.3em;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    #landingPage button:hover {
+      background: #fbc02d;
+      transform: scale(1.05);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      #landingPage h1 {
+        font-size: 2em;
+      }
+      #landingPage p {
+        font-size: 1.1em;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Football_-_Noun_Project_10604.svg" alt="โลโก้ร้าน">
+    <h1>เสื้อบอลพรีเมียร์ลีกพรีเมียม</h1>
+    <h2>เลือกทีมที่คุณรัก ⚽</h2>
+    <div class="cart-icon">🛒<span id="cartCount">0</span></div>
+  </header>
+
+  <!-- Landing Page -->
+  <section id="landingPage">
+    <h1>⚽ พรีเมียร์ลีกสไตล์คุณ</h1>
+    <p>เสื้อบอลแท้ 100% ครบ 10 ทีมดัง พร้อมส่งตรงจากอังกฤษ! <br>คุณภาพพรีเมียม ใส่เชียร์หรือสะสมก็เท่ทุกแมตช์</p>
+    <button onclick="alert('เข้าสู่ร้าน')">🛍️ เข้าสู่ร้านค้าเลย</button>
+  </section>
+
+</body>
+</html>

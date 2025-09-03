@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายละเอียดสินค้า</title>
+<style>
+body {
+  font-family:'Sarabun',sans-serif;
+  margin:0;
+  background-color:#111;
+  color:white;
+  text-align:center;
+  padding:40px;
+}
+
+/* Card ของสินค้า */
+.order-card {
+  background:#111;
+  border:2px solid #ffeb3b;
+  display:inline-block;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 2px 5px rgba(255,255,0,0.2);
+  max-width:400px;
+}
+
+.order-card img {
+  width:100%;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+
+/* ปุ่มต่างๆ */
+.btn {
+  display:inline-block;
+  margin:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:5px;
+  font-size:1.1em;
+  cursor:pointer;
+}
+
+.btn-cart {
+  background-color:#ffeb3b;
+  color:#000;
+}
+
+.btn-cart:hover {
+  background-color:#fdd835;
+}
+
+.btn-back {
+  background-color:#333;
+  color:white;
+}
+
+.btn-back:hover {
+  background-color:#555;
+}
+</style>
+</head>
+<body>
+
+<h1>🛒 รายละเอียดสินค้า</h1>
+
+<div class="order-card">
+  <img id="productImg" src="" alt="สินค้า">
+  <p>คุณเลือกสินค้า: <b id="productName"></b></p>
+  <p>ราคา: <b id="productPrice"></b> บาท</p>
+
+  <label for="size">เลือกไซส์:</label>
+  <select id="size">
+    <option>M</option>
+    <option>L</option>
+    <option>XL</option>
+    <option>XXL</option>
+  </select>
+  <br><br>
+
+  <button class="btn btn-cart" onclick="addToCart()">เพิ่มเข้าตะกร้า 🛒</button>
+  <button class="btn btn-back" onclick="window.location.href='product.html'">ย้อนกลับ</button>
+</div>
+
+<script>
+// ดึงข้อมูลสินค้าจาก sessionStorage
+const product = JSON.parse(sessionStorage.getItem("currentProduct"));
+if(product){
+  document.getElementById("productImg").src = product.img;
+  document.getElementById("productName").textContent = product.name;
+  document.getElementById("productPrice").textContent = product.price;
+}
+
+// ฟังก์ชันเพิ่มตะกร้าและไปหน้า cart
+function addToCart(){
+  const size = document.getElementById("size").value;
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  const existing = cart.find(item => item.name === product.name && item.size === size);
+  if(existing){
+    existing.qty++;
+  } else {
+    cart.push({...product, qty:1, size});
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  window.location.href = "cart.html"; // ไปหน้า cart.html หลังเพิ่มสินค้า
+}
+</script>
+
+</body>
+</html>
