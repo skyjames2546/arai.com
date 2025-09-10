@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>รายละเอียดสินค้า - เสื้อบอลพรีเมียร์ลีก</title>
+<title>รายละเอียดสินค้า - เสื้อบอลพรีเมียร์ลีก</title> 
 <style>
 body {
   margin:0;
@@ -13,20 +13,33 @@ body {
 }
 
 header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
   background: linear-gradient(to right,#000,#ffeb3b);
   position: relative;
+}
+
+/* โลโก้ตรงกลาง wrapper */
+.center-logo-wrapper {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+.center-logo {
+  width: 120px;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 header .left {
   display:flex;
   align-items:center;
   gap:20px;
+  z-index:2;
 }
-
 header .left span {
   font-weight:bold;
   font-size:1.2em;
@@ -35,23 +48,13 @@ header .left span {
   -webkit-text-fill-color:transparent;
   cursor:pointer;
 }
-
-header .center-logo {
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:120px;
-  cursor:pointer;
-}
-
 header .right {
   display:flex;
   align-items:center;
   gap:10px;
+  z-index:2;
 }
-
-header .right a, header .right button {
+header .right a, header .right button{
   background: linear-gradient(45deg,#ffeb3b,#ffc107);
   color:#111;
   padding:8px 12px;
@@ -59,8 +62,7 @@ header .right a, header .right button {
   font-weight:bold;
   text-decoration:none;
 }
-
-header .right #cartCount {
+header .right #cartCount{
   position:absolute;
   top:-8px;
   right:-10px;
@@ -71,68 +73,52 @@ header .right #cartCount {
   font-size:0.8em;
 }
 
-.main-detail {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  padding:30px;
-  gap:30px;
-}
-
-.detail-left, .detail-right {
-  background:#222;
-  border:2px solid #ffeb3b;
-  border-radius:12px;
-  padding:20px;
+/* ส่วน main-detail */
+.main-detail{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start; /* slider อยู่ด้านซ้าย */
+  align-items: flex-start;
+  padding: 30px;
+  gap: 30px;
 }
 
 .detail-left {
-  flex:1;
-  max-width:600px;
-  text-align:center;
+  flex: 0 0 700px; /* เพิ่มความกว้าง slider */
+  max-width: 700px;
+  text-align: center;
+  margin-right: 20px;
 }
 
 .detail-left .slider {
-  position:relative;
-  width:100%;
-  height:500px;
-  overflow:hidden;
-  border-radius:12px;
-  margin-bottom:15px;
+  position: relative;
+  width: 100%;
+  height: 550px; /* เพิ่มความสูง */
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 15px;
 }
 
 .detail-left .slider img {
-  position:absolute;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  opacity:0;
-  transition:opacity 0.8s ease, transform 0.4s ease;
-  border-radius:12px;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* รูปอยู่ตรงกลางและเต็มพื้นที่ */
+  object-position: center;
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
-
 .detail-left .slider img.active {
-  opacity:1;
-  z-index:1;
+  opacity: 1;
+  z-index: 1;
 }
 
 .detail-right {
-  flex:1;
-  max-width:500px;
+  flex: 1 1 500px;
+  max-width: 500px;
 }
-
-.detail-right h2 {
-  color:#ffeb3b;
-  margin-bottom:10px;
-}
-
-.detail-right p.price {
-  color:#fff176;
-  font-weight:bold;
-  margin:10px 0;
-  font-size:1.4em;
-}
-
+.detail-right h2 {color:#ffeb3b; margin-bottom:10px;}
+.detail-right p.price {color:#fff176; font-weight:bold; margin:10px 0; font-size:1.4em;}
 .detail-right select {
   padding:8px;
   border-radius:5px;
@@ -141,7 +127,6 @@ header .right #cartCount {
   margin-bottom:15px;
   width:100%;
 }
-
 .detail-right button {
   background:#ffeb3b;
   color:#111;
@@ -154,10 +139,7 @@ header .right #cartCount {
   width:100%;
   font-size:1.1em;
 }
-
-.detail-right button:hover {
-  background:#fdd835;
-}
+.detail-right button:hover {background:#fdd835;}
 
 .history {
   background:#111;
@@ -169,6 +151,23 @@ header .right #cartCount {
   overflow-y:auto;
   margin-top:15px;
 }
+
+/* responsive บนมือถือ */
+@media (max-width: 1100px) {
+  .main-detail {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .detail-left, .detail-right {
+    max-width: 90%;
+    margin-right: 0;
+  }
+
+  .detail-left .slider {
+    height: 400px; /* ปรับความสูง slider บนมือถือ */
+  }
+}
 </style>
 </head>
 <body>
@@ -179,10 +178,16 @@ header .right #cartCount {
     <span onclick="window.location.href='product.html'">Product</span>
     <span onclick="window.location.href='cart.html'">Order</span>
   </div>
-  <img class="center-logo" src="c:/Users/skyja/Downloads/unnamed.png" onclick="window.location.href='index.html'">
+
+  <div class="center-logo-wrapper">
+    <img class="center-logo" src="unnamed.png" onclick="window.location.href='index.html'">
+  </div>
+
   <div class="right">
     <a href="login.html">Login</a>
-    <div onclick="window.location.href='cart.html'">🛒<span id="cartCount">0</span></div>
+    <div onclick="window.location.href='cart.html'" style="position:relative; cursor:pointer;">🛒
+      <span id="cartCount">0</span>
+    </div>
   </div>
 </header>
 
@@ -211,126 +216,66 @@ header .right #cartCount {
   </div>
 </section>
 
-<footer></footer>
+<footer>© 2025 พรีเมียร์ลีกพรีเมียม</footer>
 
 <script>
-// ข้อมูลทีม 6 ทีม
+// ข้อมูลทีม
 const teams = {
-  "manu": {
-    name:"Manchester United",
-    price:2500,
-    images:[
-      "https://i.pinimg.com/1200x/df/9f/17/df9f178bd246ea64ce7290ccb4cf301d.jpg",
-      "https://i.pinimg.com/736x/c1/bd/25/c1bd2521bc956338a72eb1e3b08bc4fd.jpg",
-      "https://i.pinimg.com/1200x/9f/7d/58/9f7d5814d125ce22bfa67f9ee7ad9601.jpg"
-    ],
-    history:"เสื้อแมนฯยูไนเต็ดปีนี้ออกแบบใหม่ เน้นสีแดงเด่น มีโลโก้และสัญลักษณ์ร่วมสมัย วัสดุ premium ระบายอากาศดี ทำเพื่อเฉลิมฉลองความสำเร็จและแฟนบอลรุ่นใหม่"
-  },
-  "liverpool": {
-    name:"Liverpool",
-    price:2600,
-    images:[
-      "https://i.pinimg.com/1200x/1a/89/9d/1a899d2f1f68fef25a4aef262383eae3.jpg",
-      "https://i.pinimg.com/736x/37/70/a4/3770a4c0f671418e8179f273a326d055.jpg",
-      "https://i.pinimg.com/1200x/29/db/55/29db55e8d3d2a71f2d7f93e242d9a1d5.jpg"
-    ],
-    history:"เสื้อลิเวอร์พูลปีนี้สีแดงสด เน้นสัญลักษณ์ Liver bird ปรับดีไซน์ทันสมัย เหตุผลเพื่อเฉลิมฉลองฤดูกาลและแฟนบอลได้เก็บสะสม"
-  },
-  "chelsea": {
-    name:"Chelsea",
-    price:2550,
-    images:[
-      "https://i.pinimg.com/1200x/de/f9/02/def9028257ff49c66a071e538d2ccf89.jpg",
-      "https://i.pinimg.com/736x/41/76/3d/41763dd2ede5f41d8055ce56be7ce99c.jpg",
-      "https://i.pinimg.com/1200x/29/7e/5d/297e5d6b9c1b2e2a2b2a2a2a2a2a2a2a.jpg"
-    ],
-    history:"เสื้อเชลซีปีนี้สีฟ้าเด่น โลโก้สิงโตปรับใหม่ ทำให้แฟนบอลใส่สบายและทันสมัย เหตุผลเพื่อเฉลิมฉลองการสร้างทีมใหม่และแฟนคลับรุ่นใหม่"
-  },
-  "arsenal": {
-    name:"Arsenal",
-    price:2480,
-    images:[
-      "https://i.pinimg.com/1200x/e3/a2/04/e3a204804ef42c9849da348a5b99993c.jpg",
-      "https://i.pinimg.com/1200x/65/2d/3c/652d3c20da1c48ea613ea55b749cde94.jpg",
-      "https://i.pinimg.com/736x/95/87/db/9587db234840f5f527dc4fe87697fba6.jpg"
-    ],
-    history:"เสื้ออาร์เซนอลปีนี้สีแดงสด พร้อมปืนสัญลักษณ์ใหม่ วัสดุระบายอากาศดี เพื่อเฉลิมฉลองความสำเร็จทีมและแฟนบอลรุ่นใหม่"
-  },
-  "man_city": {
-    name:"Manchester City",
-    price:2700,
-    images:[
-      "https://i.pinimg.com/1200x/b6/6c/25/b66c254176ffdf45f7628fb512e1e491.jpg",
-      "https://i.pinimg.com/736x/30/aa/25/30aa25a3.jpg",
-      "https://i.pinimg.com/1200x/00/aa/33/00aa33a4.jpg"
-    ],
-    history:"เสื้อแมนฯซิตี้ปีนี้สีฟ้าเด่น โลโก้ปรับดีไซน์ให้ทันสมัย ทำเพื่อแฟนบอลใส่สบายและเฉลิมฉลองฤดูกาลใหม่"
-  },
-  "tottenham": {
-    name:"Tottenham Hotspur",
-    price:2650,
-    images:[
-      "https://i.pinimg.com/1200x/29/db/55/29db55c726f01145f27b0d0d901cf8e1.jpg",
-      "https://i.pinimg.com/736x/ba/3b/74/ba3b7442a0200362371d3d87511430fc.jpg",
-      "https://i.pinimg.com/1200x/44/40/b9/4440b9ef731ad23f8c070f797de5ce9e.jpg"
-    ],
-    history:"เสื้อสเปอร์สปีนี้สีขาว-น้ำเงินเด่น พร้อมไก่ยืนบนลูกบอล เป็นสัญลักษณ์ใหม่ เหตุผลเพื่อเฉลิมฉลองทีมและแฟนบอลสะสมเป็นของพรีเมียม"
-  }
+  "manu": {name:"Manchester United", price:2500, images:["https://i.pinimg.com/1200x/df/9f/17/df9f178bd246ea64ce7290ccb4cf301d.jpg","https://i.pinimg.com/736x/c1/bd/25/c1bd2521bc956338a72eb1e3b08bc4fd.jpg","https://i.pinimg.com/1200x/9f/7d/58/9f7d5814d125ce22bfa67f9ee7ad9601.jpg"], history:"เสื้อแมนฯยูไนเต็ดปีนี้ออกแบบใหม่ เน้นสีแดงเด่น มีโลโก้และสัญลักษณ์ร่วมสมัย วัสดุ premium ระบายอากาศดี ทำเพื่อเฉลิมฉลองความสำเร็จและแฟนบอลรุ่นใหม่"},
+  "liverpool": {name:"Liverpool", price:2600, images:["https://i.pinimg.com/1200x/1a/89/9d/1a899d2f1f68fef25a4aef262383eae3.jpg","https://i.pinimg.com/736x/37/70/a4/3770a4c0f671418e8179f273a326d055.jpg","https://i.pinimg.com/1200x/29/db/55/29db55e8d3d2a71f2d7f93e242d9a1d5.jpg"], history:"เสื้อลิเวอร์พูลปีนี้สีแดงสด เน้นสัญลักษณ์ Liver bird ปรับดีไซน์ทันสมัย เหตุผลเพื่อเฉลิมฉลองฤดูกาลและแฟนบอลได้เก็บสะสม"},
+  "chelsea": {name:"Chelsea", price:2550, images:["https://i.pinimg.com/1200x/de/f9/02/def9028257ff49c66a071e538d2ccf89.jpg","https://i.pinimg.com/736x/41/76/3d/41763dd2ede5f41d8055ce56be7ce99c.jpg","https://i.pinimg.com/1200x/29/7e/5d/297e5d6b9c1b2e2a2b2a2a2a2a2a.jpg"], history:"เสื้อเชลซีปีนี้สีฟ้าเด่น โลโก้สิงโตปรับใหม่ ทำให้แฟนบอลใส่สบายและทันสมัย เหตุผลเพื่อเฉลิมฉลองการสร้างทีมใหม่และแฟนคลับรุ่นใหม่"},
+  "arsenal": {name:"Arsenal", price:2480, images:["https://i.pinimg.com/1200x/e3/a2/04/e3a204804ef42c9849da348a5b99993c.jpg","https://i.pinimg.com/1200x/65/2d/3c/652d3c20da1c48ea613ea55b749cde94.jpg","https://i.pinimg.com/736x/95/87/db/9587db234840f5f527dc4fe87697fba6.jpg"], history:"เสื้ออาร์เซนอลปีนี้สีแดงสด พร้อมปืนสัญลักษณ์ใหม่ วัสดุระบายอากาศดี เพื่อเฉลิมฉลองความสำเร็จทีมและแฟนบอลรุ่นใหม่"},
+  "man_city": {name:"Manchester City", price:2700, images:["https://i.pinimg.com/1200x/b6/6c/25/b66c254176ffdf45f7628fb512e1e491.jpg","https://i.pinimg.com/736x/30/aa/25/30aa25a3.jpg","https://i.pinimg.com/1200x/00/aa/33/00aa33a4.jpg"], history:"เสื้อแมนฯซิตี้ปีนี้สีฟ้าเด่น โลโก้ปรับดีไซน์ให้ทันสมัย ทำเพื่อแฟนบอลใส่สบายและเฉลิมฉลองฤดูกาลใหม่"},
+  "tottenham": {name:"Tottenham Hotspur", price:2650, images:["https://i.pinimg.com/1200x/29/db/55/29db55c726f01145f27b0d0d901cf8e1.jpg","https://i.pinimg.com/736x/ba/3b/74/ba3b7442a0200362371d3d87511430fc.jpg","https://i.pinimg.com/1200x/44/40/b9/4440b9ef731ad23f8c070f797de5ce9e.jpg"], history:"เสื้อสเปอร์สปีนี้สีขาว-น้ำเงินเด่น พร้อมไก่ยืนบนลูกบอล เป็นสัญลักษณ์ใหม่ เหตุผลเพื่อเฉลิมฉลองทีมและแฟนบอลสะสมเป็นของพรีเมียม"}
 };
 
-// ดึงค่าทีมจาก URL เช่น detail.html?team=manu
+// ดึง teamKey จาก URL
 const urlParams = new URLSearchParams(window.location.search);
 const teamKey = urlParams.get('team') || 'manu';
 const team = teams[teamKey];
 
-// แสดงข้อมูลทีม
+// แสดงข้อมูล
 document.getElementById('productName').textContent = team.name;
 document.getElementById('productPrice').textContent = '฿'+team.price;
 document.getElementById('historyText').textContent = team.history;
 
-// แสดงรูปภาพ slider
+// Slider
 const sliderDiv = document.querySelector('.slider');
 sliderDiv.innerHTML = '';
 team.images.forEach((src,index)=>{
-  const img = document.createElement('img');
-  img.src = src;
+  const img=document.createElement('img');
+  img.src=src;
   if(index===0) img.classList.add('active');
   sliderDiv.appendChild(img);
 });
-
-// Slider ฟังก์ชัน
-let idx = 0;
+let idx=0;
 setInterval(()=>{
-  const sliderImages = document.querySelectorAll('.slider img');
-  sliderImages.forEach(img=>img.classList.remove('active'));
-  idx = (idx+1) % sliderImages.length;
-  sliderImages[idx].classList.add('active');
+  const imgs=document.querySelectorAll('.slider img');
+  imgs.forEach(img=>img.classList.remove('active'));
+  idx=(idx+1)%imgs.length;
+  imgs[idx].classList.add('active');
 },4000);
 
-// เพิ่มไปยังตะกร้า
+// เพิ่มตะกร้า
 document.getElementById('addCartBtn').addEventListener('click',()=>{
-  const name = team.name;
-  const price = team.price;
-  const size = document.getElementById('sizeSelect').value;
-  const img = document.querySelector('.slider img.active').src;
-
-  const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const existing = cart.find(item=>item.name===name && item.size===size);
-  if(existing) existing.qty += 1;
-  else cart.push({name, price, size, img, qty:1});
+  const size=document.getElementById('sizeSelect').value;
+  const cart=JSON.parse(localStorage.getItem('cart'))||[];
+  const existing=cart.find(item=>item.name===team.name && item.size===size);
+  if(existing) existing.qty+=1;
+  else cart.push({name:team.name, price:team.price, size, img:team.images[0], qty:1});
   localStorage.setItem('cart',JSON.stringify(cart));
-  document.getElementById('cartCount').textContent = cart.reduce((sum,item)=>sum+item.qty,0);
-  alert(' เพิ่มไปยังตะกร้าเรียบร้อยแล้ว!');
+  document.getElementById('cartCount').textContent=cart.reduce((sum,item)=>sum+item.qty,0);
+  alert('เพิ่มไปยังตะกร้าเรียบร้อยแล้ว!');
 });
 
-// Toggle history
+// toggle history
 document.getElementById('historyBtn').addEventListener('click',()=>{
-  const historyDiv = document.getElementById('historyText');
-  historyDiv.style.display = historyDiv.style.display==='none'?'block':'none';
+  const h=document.getElementById('historyText');
+  h.style.display=(h.style.display==='none')?'block':'none';
 });
 
-// Update cart count
-document.getElementById('cartCount').textContent = (JSON.parse(localStorage.getItem('cart')) || []).reduce((sum,item)=>sum+item.qty,0);
+// update cart count
+document.getElementById('cartCount').textContent=(JSON.parse(localStorage.getItem('cart'))||[]).reduce((sum,item)=>sum+item.qty,0);
 </script>
 
 </body>

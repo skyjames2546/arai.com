@@ -144,7 +144,7 @@
     <button class="btn-back" onclick="window.location.href='product.html'">🔙 กลับไปสินค้า</button>
     <div style="text-align:right;">
       <span class="total">รวมราคาที่เลือก: <span id="totalPrice">0</span> บาท</span>
-      <button class="btn-checkout" onclick="checkout()">สั่งซื้อ</button>
+      <button class="btn-checkout" onclick="checkout()">ชำระเงิน</button>
     </div>
   </div>
 </section>
@@ -197,13 +197,17 @@ document.addEventListener("change", e => {
 
 // ฟังก์ชันสั่งซื้อ
 function checkout(){
-  const selected = cart.filter((_,i) => document.querySelector(`.selectItem[data-index='${i}']`).checked);
+   const selected = cart.filter((_,i) => document.querySelector(`.selectItem[data-index='${i}']`).checked);
   if(selected.length === 0){
     alert("กรุณาเลือกสินค้าที่ต้องการสั่งซื้อ");
     return;
   }
-  alert("สั่งซื้อเรียบร้อย! จำนวนสินค้า: " + selected.length);
-  // สามารถต่อยอดส่งไปหน้า order/ชำระเงิน
+
+  // บันทึกรายการที่เลือกไว้ใน localStorage เพื่อใช้งานใน checkout.html
+  localStorage.setItem("selectedCart", JSON.stringify(selected));
+
+  // เปลี่ยนหน้าไปยัง checkout.html
+  window.location.href = "checkout.html";
 }
 
 // ฟังก์ชันลบสินค้า

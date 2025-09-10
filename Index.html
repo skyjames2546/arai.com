@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>เสื้อบอลพรีเมียร์ลีกพรีเมียม</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
@@ -108,6 +108,32 @@
     transition: background 0.3s ease;
   }
   #langDropdown button:hover { background:#222; }
+
+  /* User info display */
+  #userInfo {
+    font-weight: bold;
+    color: #ffeb3b;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #userInfo span {
+    font-size: 1.1em;
+  }
+  #logoutBtn {
+    padding: 6px 14px;
+    border-radius: 12px;
+    border: 2px solid #ff5252;
+    background: linear-gradient(90deg, #ff5252, #ff0000);
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  #logoutBtn:hover {
+    background: linear-gradient(90deg, #ff0000, #b22222);
+    box-shadow: 0 0 8px #ff5252;
+  }
 
   /* Landing Page */
   #landingPage { 
@@ -225,23 +251,28 @@
 
 <!-- Header -->
 <header>
-   <div class="header-left">
-    <img src="c:\Users\skyja\Downloads\unnamed.png" alt="Logo Left" onclick="window.location.href='index.html'">
-    
-    <!-- ย้ายปุ่มต่างๆ มาฝั่งซ้าย -->
-    <div class="header-right">
-      <!-- ปุ่มเปลี่ยนภาษามาก่อน -->
-      <div style="position:relative;">
-        <button id="langBtn"><i class="fas fa-globe"></i></button>
-        <div id="langDropdown">
-          <button onclick="setLanguage('th')">ไทย</button>
-          <button onclick="setLanguage('en')">English</button>
-        </div>
+  <div class="header-left">
+    <img src="unnamed.jpeg" alt="Logo Left" onclick="window.location.href='index.html'">
+  </div>
+  <div class="header-right">
+    <!-- ปุ่มเปลี่ยนภาษา -->
+    <div style="position:relative;">
+      <button id="langBtn"><i class="fas fa-globe"></i></button>
+      <div id="langDropdown">
+        <button onclick="setLanguage('th')">ไทย</button>
+        <button onclick="setLanguage('en')">English</button>
       </div>
-      <!-- จากนั้นเป็นปุ่ม Login / Register -->
-      <a href="login.html" id="loginLink">Login</a>
-      <a href="register.html" id="registerLink">Register</a>
     </div>
+
+    <!-- User area -->
+    <div id="userInfo" style="display:none;">
+      <span>👤 <span id="userName"></span></span>
+      <button id="logoutBtn">ออกจากระบบ</button>
+    </div>
+
+    <!-- Login / Register links -->
+    <a href="login.html" id="loginLink">Login</a>
+    <a href="register.html" id="registerLink">Register</a>
   </div>
 </header>
 
@@ -258,13 +289,13 @@
 
   <div id="landingRight">
     <a href="product.html">
-      <img src="https://i.pinimg.com/1200x/e7/30/0c/e7300c1d792fdec1778d70bb8864ec64.jpg" alt="Background 1">
+      <img src="https://i.pinimg.com/1200x/e7/30/0c/e7300c1d792fdec1778d70bb8864ec64.jpg" alt="Background 1" />
     </a>
     <a href="product.html">
-      <img src="https://i.pinimg.com/1200x/ea/5b/aa/ea5baa9aa30261d75806b7bf8f56f8ae.jpg" alt="Background 2">
+      <img src="https://i.pinimg.com/1200x/ea/5b/aa/ea5baa9aa30261d75806b7bf8f56f8ae.jpg" alt="Background 2" />
     </a>
     <a href="product.html">
-      <img src="https://i.pinimg.com/736x/cb/81/fd/cb81fda457a964b9f35178ffc3ee7507.jpg" alt="Background 3">
+      <img src="https://i.pinimg.com/736x/cb/81/fd/cb81fda457a964b9f35178ffc3ee7507.jpg" alt="Background 3" />
     </a>
   </div>
 </section>
@@ -295,6 +326,40 @@ function setLanguage(lang) {
   }
   langDropdown.style.display='none';
 }
+
+// --- เพิ่มโค้ดแสดงชื่อผู้ใช้ ---
+
+function updateUserUI() {
+  const user = localStorage.getItem('loggedInUser');
+  const userInfo = document.getElementById('userInfo');
+  const userNameSpan = document.getElementById('userName');
+  const loginLink = document.getElementById('loginLink');
+  const registerLink = document.getElementById('registerLink');
+
+  if(user) {
+    // ถ้ามีผู้ใช้ล็อกอิน แสดงชื่อ + ปุ่ม logout
+    userNameSpan.textContent = user;
+    userInfo.style.display = 'flex';
+
+    // ซ่อนปุ่ม Login/Register
+    loginLink.style.display = 'none';
+    registerLink.style.display = 'none';
+  } else {
+    // ถ้าไม่มีผู้ใช้ แสดง Login/Register
+    userInfo.style.display = 'none';
+    loginLink.style.display = 'inline-block';
+    registerLink.style.display = 'inline-block';
+  }
+}
+
+// logout ทำลายข้อมูล localStorage แล้วรีเฟรชหน้า
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  localStorage.removeItem('loggedInUser');
+  updateUserUI();
+});
+
+// เรียกตอนโหลดหน้า
+updateUserUI();
 </script>
 
 </body>

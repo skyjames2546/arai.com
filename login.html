@@ -1,145 +1,155 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เข้าสู่ระบบ - พรีเมียร์ลีกพรีเมียม</title>
-<style>
-  html, body {
-    margin:0;
-    padding:0;
-    height:100%; 
-    font-family:'Sarabun',sans-serif;
-    background: linear-gradient(135deg, #000, #222);
-    color:#fff;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>เข้าสู่ระบบ - พรีเมียร์ลีกพรีเมียม</title>
+  <style>
+    html, body {
+      margin:0;
+      padding:0;
+      height:100%; 
+      font-family:'Sarabun',sans-serif;
+      background: linear-gradient(135deg, #000, #222);
+      color:#fff;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      position:relative;
+    }
 
-  /* ปุ่มโฮมมุมบนซ้าย */
-  #homeBtn {
-    position:absolute;
-    top:20px;
-    left:20px;
-    background: linear-gradient(45deg, #ffeb3b, #ffc107);
-    color:#111;
-    border:none;
-    border-radius:10px;
-    padding:10px 14px;
-    cursor:pointer;
-    font-size:1.2em;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
-  }
+    /* ปุ่ม Home ลิงก์กลับหน้าแรก */
+    #homeBtn {
+      position:absolute;
+      top:20px;
+      left:20px;
+      background: linear-gradient(45deg, #ffeb3b, #ffc107);
+      color:#111;
+      border:none;
+      border-radius:10px;
+      padding:10px 14px;
+      cursor:pointer;
+      font-size:1.2em;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+      text-decoration:none;
+    }
+    #homeBtn:hover {
+      background: linear-gradient(45deg, #ffd54f, #fbc02d);
+      transform: scale(1.05);
+      box-shadow: 0 6px 10px rgba(0,0,0,0.6);
+    }
 
-  #homeBtn:hover {
-    background: linear-gradient(45deg, #ffd54f, #fbc02d);
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0,0,0,0.6);
-  }
+    /* กล่องเข้าสู่ระบบ */
+    .login-box {
+      background: #1a1a1a;
+      padding: 30px 40px;
+      border-radius: 15px;
+      width:350px;
+      text-align:center;
+      border:2px solid #ffeb3b;
+      box-shadow: 0 8px 20px rgba(255,235,59,0.5);
+      position:relative;
+      z-index:1;
+    }
 
-  .login-box {
-    background: #1a1a1a;
-    padding: 30px 40px;
-    border-radius: 15px;
-    width:350px;
-    text-align:center;
-    border:2px solid #ffeb3b;
-    box-shadow: 0 8px 20px rgba(255,235,59,0.5);
-    position:relative;
-    z-index:1;
-  }
+    .login-box h2 {
+      margin-bottom: 20px;
+      color:#ffeb3b;
+      text-shadow: 0 2px 5px #000;
+    }
 
-  .login-box h2 {
-    margin-bottom: 20px;
-    color:#ffeb3b;
-    text-shadow: 0 2px 5px #000;
-  }
+    .login-box input {
+      width:100%;
+      padding:12px;
+      margin:8px 0;
+      border-radius:10px;
+      border:1px solid #ffeb3b;
+      background:#222;
+      color:#fff;
+      font-size:1em;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .login-box input:focus {
+      outline:none;
+      border-color:#ffc107;
+      box-shadow: 0 0 8px #ffc107;
+    }
 
-  .login-box input {
-    width:100%;
-    padding:12px;
-    margin:8px 0;
-    border-radius:10px;
-    border:1px solid #ffeb3b;
-    background:#222;
-    color:#fff;
-    font-size:1em;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
-  }
+    .action-links {
+      display:flex;
+      justify-content:space-between;
+      margin-top:15px;
+    }
+    .action-links a {
+      color:#ffeb3b;
+      text-decoration:none;
+      font-weight:bold;
+      transition: all 0.3s ease;
+    }
+    .action-links a:hover {
+      color:#ffc107;
+    }
 
-  .login-box input:focus {
-    outline:none;
-    border-color:#ffc107;
-    box-shadow: 0 0 8px #ffc107;
-  }
+    .login-box button {
+      width:100%;
+      padding:12px;
+      margin-top:15px;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:bold;
+      font-size:1em;
+      background: linear-gradient(45deg, #ffeb3b, #ffc107);
+      color:#111;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: all 0.3s ease;
+    }
+    .login-box button:hover {
+      background: linear-gradient(45deg, #ffd54f, #fbc02d);
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 6px 15px rgba(0,0,0,0.6);
+    }
 
-  .action-links {
-    display:flex;
-    justify-content:space-between;
-    margin-top:15px;
-  }
+    /* ข้อความแสดงผล error / success */
+    #loginError {
+      font-size:0.9em;
+      margin-top:5px;
+      min-height:1em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
 
-  .action-links a {
-    color:#ffeb3b;
-    text-decoration:none;
-    font-weight:bold;
-    transition: all 0.3s ease;
-  }
+    /* ไอคอนติ๊กถูกสีเขียว */
+    #loginError.success::before {
+      content: "✔️";
+      color: #4caf50;
+      font-weight: bold;
+      font-size: 1.2em;
+    }
 
-  .action-links a:hover {
-    color:#ffc107;
-  }
-
-  .login-box button {
-    width:100%;
-    padding:12px;
-    margin-top:15px;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-    font-weight:bold;
-    font-size:1em;
-    background: linear-gradient(45deg, #ffeb3b, #ffc107);
-    color:#111;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
-  }
-
-  .login-box button:hover {
-    background: linear-gradient(45deg, #ffd54f, #fbc02d);
-    transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.6);
-  }
-
-  #loginError {
-    color:#ff5252;
-    font-size:0.9em;
-    margin-top:5px;
-    min-height:1em;
-  }
-
-  @media(max-width:400px){
-    .login-box { width:90%; padding:20px; }
-    #homeBtn { top:10px; left:10px; padding:8px 12px; font-size:1em; }
-  }
-</style>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    @media(max-width:400px){
+      .login-box { width:90%; padding:20px; }
+      #homeBtn { top:10px; left:10px; padding:8px 12px; font-size:1em; }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
 <body>
 
 <!-- ปุ่ม Home -->
 <a href="index.html" id="homeBtn" title="กลับสู่หน้าแรก"><i class="fas fa-home"></i></a>
 
+<!-- กล่องเข้าสู่ระบบ -->
 <div class="login-box">
   <h2>เข้าสู่ระบบ</h2>
-  <input type="text" id="username" placeholder="ชื่อผู้ใช้">
-  <input type="password" id="password" placeholder="รหัสผ่าน">
+  <input type="text" id="username" placeholder="ชื่อผู้ใช้" />
+  <input type="password" id="password" placeholder="รหัสผ่าน" />
   <p id="loginError"></p>
   <button onclick="login()">เข้าสู่ระบบ</button>
   <div class="action-links">
@@ -152,20 +162,28 @@
 function login(){
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
+  const errorBox = document.getElementById("loginError");
+
+  // รีเซ็ตคลาส success ทุกครั้งก่อนเช็คใหม่
+  errorBox.classList.remove('success');
 
   if(username === "" || password === ""){
-    document.getElementById("loginError").textContent = "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน";
+    errorBox.style.color = "#ff5252";
+    errorBox.textContent = "กรุณากรอกชื่อผู้ใช้และรหัสผ่าน";
     return;
   }
 
-  // ตัวอย่างการตรวจสอบ
-  if(username === "admin" && password === "1234"){
-    alert("เข้าสู่ระบบสำเร็จ!");
-    window.location.href = "index.html";
-  } else {
-    document.getElementById("loginError").textContent = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-  }
+  // ไม่ตรวจสอบ username/password
+  errorBox.classList.add('success');
+  errorBox.style.color = "#4caf50";
+  errorBox.textContent = "เข้าสู่ระบบสำเร็จ! กำลังนำทาง...";
+  localStorage.setItem("username", username);
+
+  setTimeout(() => {
+    window.location.href = "product.html";
+  }, 3000);
 }
 </script>
+
 </body>
 </html>
